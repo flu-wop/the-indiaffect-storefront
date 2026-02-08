@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply overflow-x-hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+@layer components {
+  /* Button styles */
+  .btn-primary {
+    @apply bg-gold text-charcoal px-8 py-4 font-semibold uppercase tracking-wider text-sm 
+           hover:bg-gold-light hover:scale-102 transition-all duration-300 ease-smooth;
+  }
+
+  .btn-secondary {
+    @apply border-2 border-gold text-gold px-8 py-4 font-semibold uppercase tracking-wider text-sm
+           hover:bg-gold hover:text-charcoal hover:scale-102 transition-all duration-300 ease-smooth;
+  }
+
+  /* Card hover effects */
+  .card-hover {
+    @apply transition-all duration-400 ease-smooth hover:scale-102 hover:shadow-xl;
+  }
+
+  /* Section spacing */
+  .section {
+    @apply py-16 md:py-24 lg:py-30;
+  }
+
+  /* Skeleton loaders */
+  .skeleton {
+    @apply animate-pulse bg-charcoal-light rounded;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gradient-overlay {
+    @apply bg-gradient-to-t from-charcoal/90 via-charcoal/50 to-transparent;
+  }
+}

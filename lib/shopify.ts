@@ -3,6 +3,114 @@ import { createStorefrontApiClient } from '@shopify/storefront-api-client';
 const SHOPIFY_STORE_DOMAIN = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || '';
 const STOREFRONT_ACCESS_TOKEN = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN || '';
 
+// ---------------------------------------------------------------------------
+// Types — mirror exactly the fields selected in the queries/fragments below.
+// Add a field to a query, add it here too; nothing here is guessed.
+// ---------------------------------------------------------------------------
+
+export interface Money {
+  amount: string;
+  currencyCode: string;
+}
+
+export interface ShopifyImage {
+  url: string;
+  altText: string | null;
+  width: number;
+  height: number;
+}
+
+export interface Edge<T> {
+  node: T;
+}
+
+export interface Connection<T> {
+  edges: Edge<T>[];
+}
+
+export interface SelectedOption {
+  name: string;
+  value: string;
+}
+
+export interface ProductVariant {
+  id: string;
+  title: string;
+  availableForSale: boolean;
+  quantityAvailable: number | null;
+  selectedOptions: SelectedOption[];
+  price: Money;
+  compareAtPrice: Money | null;
+  image: ShopifyImage | null;
+}
+
+export interface ShopifyProduct {
+  id: string;
+  title: string;
+  handle: string;
+  description: string;
+  descriptionHtml: string;
+  priceRange: {
+    minVariantPrice: Money;
+    maxVariantPrice: Money;
+  };
+  featuredImage: ShopifyImage | null;
+  images: Connection<ShopifyImage>;
+  variants: Connection<ProductVariant>;
+  tags: string[];
+}
+
+export interface ShopifyCollection {
+  id: string;
+  title: string;
+  handle: string;
+  description: string;
+  descriptionHtml: string;
+  image: ShopifyImage | null;
+  products: Connection<ShopifyProduct>;
+}
+
+// Lighter shape returned by getCollections() below — that query doesn't
+// select descriptionHtml or products, so don't claim it does.
+export interface ShopifyCollectionSummary {
+  id: string;
+  title: string;
+  handle: string;
+  description: string;
+  image: ShopifyImage | null;
+}
+
+export interface CartLineMerchandise {
+  id: string;
+  title: string;
+  product: {
+    title: string;
+    featuredImage: ShopifyImage | null;
+  };
+  price: Money;
+}
+
+export interface CartLine {
+  id: string;
+  quantity: number;
+  merchandise: CartLineMerchandise;
+}
+
+export interface ShopifyCart {
+  id: string;
+  checkoutUrl: string;
+  lines: Connection<CartLine>;
+  cost: {
+    totalAmount: Money;
+    subtotalAmount: Money;
+  };
+}
+
+export interface UserError {
+  field: string[] | null;
+  message: string;
+}
+
 // Create Shopify client (will fail gracefully if env vars missing)
 const client = SHOPIFY_STORE_DOMAIN && STOREFRONT_ACCESS_TOKEN
   ? createStorefrontApiClient({
@@ -22,7 +130,7 @@ export async function shopifyFetch<T>({
   variables = {},
 }: {
   query: string;
-  variables?: Record<string, any>;
+  variables?: Record<string, unknown>;
 }): Promise<T | null> {
   if (!client) {
     console.warn('Shopify client not configured. Set environment variables to enable API calls.');
@@ -125,12 +233,12 @@ export async function getProducts(first: number = 10) {
     }
   `;
 
-  const data = await shopifyFetch<{ products: any }>({
+  const data = await shopifyFetch<{ products: Connection<ShopifyProduct> }>({
     query,
     variables: { first },
   });
 
-  return data?.products?.edges.map((edge: any) => edge.node) || [];
+  return data?.products?.edges.map((edge) => edge.node) || [];
 }
 
 // Get single product by handle
@@ -144,7 +252,7 @@ export async function getProduct(handle: string) {
     }
   `;
 
-  const data = await shopifyFetch<{ productByHandle: any }>({
+  const data = await shopifyFetch<{ productByHandle: ShopifyProduct | null }>({
     query,
     variables: { handle },
   });
@@ -180,7 +288,7 @@ export async function getCollection(handle: string, first: number = 20) {
     }
   `;
 
-  const data = await shopifyFetch<{ collectionByHandle: any }>({
+  const data = await shopifyFetch<{ collectionByHandle: ShopifyCollection | null }>({
     query,
     variables: { handle, first },
   });
@@ -189,7 +297,7 @@ export async function getCollection(handle: string, first: number = 20) {
 
   return {
     ...data.collectionByHandle,
-    products: data.collectionByHandle.products.edges.map((edge: any) => edge.node),
+    products: data.collectionByHandle.products.edges.map((edge) => edge.node),
   };
 }
 
@@ -216,12 +324,12 @@ export async function getCollections(first: number = 10) {
     }
   `;
 
-  const data = await shopifyFetch<{ collections: any }>({
+  const data = await shopifyFetch<{ collections: Connection<ShopifyCollectionSummary> }>({
     query,
     variables: { first },
   });
 
-  return data?.collections?.edges.map((edge: any) => edge.node) || [];
+  return data?.collections?.edges.map((edge) => edge.node) || [];
 }
 
 // Create cart
@@ -246,6 +354,8 @@ export async function createCart() {
                       featuredImage {
                         url
                         altText
+                        width
+                        height
                       }
                     }
                     price {
@@ -276,7 +386,7 @@ export async function createCart() {
     }
   `;
 
-  const data = await shopifyFetch<{ cartCreate: any }>({ query });
+  const data = await shopifyFetch<{ cartCreate: { cart: ShopifyCart | null; userErrors: UserError[] } }>({ query });
   return data?.cartCreate?.cart || null;
 }
 
@@ -334,7 +444,7 @@ export async function addToCart(cartId: string, variantId: string, quantity: num
     }
   `;
 
-  const data = await shopifyFetch<{ cartLinesAdd: any }>({
+  const data = await shopifyFetch<{ cartLinesAdd: { cart: ShopifyCart | null; userErrors: UserError[] } }>({
     query,
     variables: {
       cartId,
@@ -367,6 +477,8 @@ export async function updateCartLine(cartId: string, lineId: string, quantity: n
                       featuredImage {
                         url
                         altText
+                        width
+                        height
                       }
                     }
                     price {
@@ -397,7 +509,7 @@ export async function updateCartLine(cartId: string, lineId: string, quantity: n
     }
   `;
 
-  const data = await shopifyFetch<{ cartLinesUpdate: any }>({
+  const data = await shopifyFetch<{ cartLinesUpdate: { cart: ShopifyCart | null; userErrors: UserError[] } }>({
     query,
     variables: {
       cartId,
@@ -430,6 +542,8 @@ export async function removeFromCart(cartId: string, lineId: string) {
                       featuredImage {
                         url
                         altText
+                        width
+                        height
                       }
                     }
                     price {
@@ -460,7 +574,7 @@ export async function removeFromCart(cartId: string, lineId: string) {
     }
   `;
 
-  const data = await shopifyFetch<{ cartLinesRemove: any }>({
+  const data = await shopifyFetch<{ cartLinesRemove: { cart: ShopifyCart | null; userErrors: UserError[] } }>({
     query,
     variables: {
       cartId,
@@ -519,7 +633,7 @@ export async function getCart(cartId: string) {
     }
   `;
 
-  const data = await shopifyFetch<{ cart: any }>({
+  const data = await shopifyFetch<{ cart: ShopifyCart | null }>({
     query,
     variables: { cartId },
   });

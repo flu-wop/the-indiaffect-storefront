@@ -4,6 +4,7 @@ import TrustBar from '@/components/TrustBar';
 import ProductCard from '@/components/ProductCard';
 import TextureSwatch from '@/components/TextureSwatch';
 import NewsletterForm from '@/components/NewsletterForm';
+import Reveal from '@/components/Reveal';
 import { DEMO_PRODUCTS, HERO_IMAGES, FOUNDER } from '@/lib/demo-data';
 
 export default async function HomePage() {
@@ -42,6 +43,7 @@ export default async function HomePage() {
       <TrustBar />
 
       {/* Featured / Best Sellers Section */}
+      <Reveal>
       <section className="section">
         <div className="container">
           <div className="text-center mb-12">
@@ -79,8 +81,10 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+      </Reveal>
 
       {/* Shop by Texture Section */}
+      <Reveal>
       <section className="section bg-paper-dim">
         <div className="container">
           <div className="text-center mb-12">
@@ -128,8 +132,10 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+      </Reveal>
 
       {/* Shop by Length Section */}
+      <Reveal>
       <section className="section">
         <div className="container">
           <div className="text-center mb-12">
@@ -159,8 +165,10 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+      </Reveal>
 
       {/* Customer Gallery / UGC Section */}
+      <Reveal>
       <section className="section bg-paper-dim">
         <div className="container">
           <div className="text-center mb-12">
@@ -194,8 +202,10 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+      </Reveal>
 
       {/* Meet The Founder */}
+      <Reveal>
       <section className="section">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -224,8 +234,10 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+      </Reveal>
 
       {/* Newsletter Section */}
+      <Reveal>
       <section className="section">
         <div className="container max-w-2xl text-center">
           <h2 className="font-display uppercase text-2xl md:text-3xl text-ink mb-4 tracking-wide">
@@ -237,6 +249,7 @@ export default async function HomePage() {
           <NewsletterForm />
         </div>
       </section>
+      </Reveal>
     </>
   );
 }

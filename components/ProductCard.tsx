@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -24,6 +27,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const [loaded, setLoaded] = useState(false);
   const price = parseFloat(product.priceRange.minVariantPrice.amount);
   const formattedPrice = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -42,7 +46,10 @@ export default function ProductCard({ product }: ProductCardProps) {
             src={product.featuredImage.url}
             alt={product.featuredImage.altText || product.title}
             fill
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
+            onLoad={() => setLoaded(true)}
+            className={`object-cover group-hover:scale-105 transition-all duration-500 ${
+              loaded ? 'opacity-100 blur-0' : 'opacity-0 blur-sm'
+            }`}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           />
         ) : (

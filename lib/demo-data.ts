@@ -13,10 +13,10 @@ export const DEMO_PRODUCTS = [
       minVariantPrice: { amount: '35.00', currencyCode: 'USD' },
     },
     featuredImage: {
-      url: 'https://theindiaffectstore.myshopify.com/cdn/shop/files/2E0E1E4F-F8F7-421C-BB06-4B5E040A1BCC.png?v=1784507503&width=1445',
+      url: 'https://theindiaffectstore.myshopify.com/cdn/shop/files/2E0E1E4F-F8F7-421C-BB06-4B5E040A1BCC.png?v=1784507503&width=1254',
       altText: 'Virgin Hair Bundles',
-      width: 1445,
-      height: 1808,
+      width: 1254,
+      height: 1568,
     },
     // Actually sold out on the live store. Demo keeps that true-to-life but
     // replaces the dead end with a "Notify Me" CTA and pulls it out of the
@@ -32,10 +32,10 @@ export const DEMO_PRODUCTS = [
       minVariantPrice: { amount: '25.00', currencyCode: 'USD' },
     },
     featuredImage: {
-      url: 'https://theindiaffectstore.myshopify.com/cdn/shop/files/16859449755865695459_2048.jpg?v=1786064484&width=533',
+      url: 'https://theindiaffectstore.myshopify.com/cdn/shop/files/16859449755865695459_2048.jpg?v=1786064484&width=1000',
       altText: 'The IndiAffect Mini Shorts',
-      width: 533,
-      height: 666,
+      width: 1000,
+      height: 1250,
     },
     available: true,
   },
@@ -48,10 +48,10 @@ export const DEMO_PRODUCTS = [
       minVariantPrice: { amount: '25.00', currencyCode: 'USD' },
     },
     featuredImage: {
-      url: 'https://theindiaffectstore.myshopify.com/cdn/shop/files/1652858097662334095_2048.jpg?v=1786064547&width=533',
+      url: 'https://theindiaffectstore.myshopify.com/cdn/shop/files/1652858097662334095_2048.jpg?v=1786064547&width=1000',
       altText: 'The IndiAffect Mini Top',
-      width: 533,
-      height: 666,
+      width: 1000,
+      height: 1250,
     },
     available: true,
   },
@@ -64,10 +64,10 @@ export const DEMO_PRODUCTS = [
       minVariantPrice: { amount: '26.00', currencyCode: 'USD' },
     },
     featuredImage: {
-      url: 'https://theindiaffectstore.myshopify.com/cdn/shop/files/4446007677454256255_2048.jpg?v=1786187659&width=533',
+      url: 'https://theindiaffectstore.myshopify.com/cdn/shop/files/4446007677454256255_2048.jpg?v=1786187659&width=1000',
       altText: '"I Have An Affect On People" Cropped Tee',
-      width: 533,
-      height: 666,
+      width: 1000,
+      height: 1250,
     },
     available: true,
   },
@@ -80,10 +80,10 @@ export const DEMO_PRODUCTS = [
       minVariantPrice: { amount: '28.00', currencyCode: 'USD' },
     },
     featuredImage: {
-      url: 'https://theindiaffectstore.myshopify.com/cdn/shop/files/2106415847821853261_2048.jpg?v=1786064220&width=533',
+      url: 'https://theindiaffectstore.myshopify.com/cdn/shop/files/2106415847821853261_2048.jpg?v=1786064220&width=1000',
       altText: 'The IndiAffect Cosmetic Bag',
-      width: 533,
-      height: 666,
+      width: 1000,
+      height: 1250,
     },
     available: true,
   },
@@ -96,10 +96,10 @@ export const DEMO_PRODUCTS = [
       minVariantPrice: { amount: '29.99', currencyCode: 'USD' },
     },
     featuredImage: {
-      url: 'https://theindiaffectstore.myshopify.com/cdn/shop/files/4852794823316943492_2048.jpg?v=1786180547&width=533',
+      url: 'https://theindiaffectstore.myshopify.com/cdn/shop/files/4852794823316943492_2048.jpg?v=1786180547&width=1000',
       altText: '"I Have An Affect On People" Statement Throw Pillow',
-      width: 533,
-      height: 666,
+      width: 1000,
+      height: 1250,
     },
     available: true,
   },
@@ -112,10 +112,10 @@ export const DEMO_PRODUCTS = [
       minVariantPrice: { amount: '40.00', currencyCode: 'USD' },
     },
     featuredImage: {
-      url: 'https://theindiaffectstore.myshopify.com/cdn/shop/files/9714079243322202976_2048.jpg?v=1786064216&width=533',
+      url: 'https://theindiaffectstore.myshopify.com/cdn/shop/files/9714079243322202976_2048.jpg?v=1786064216&width=1000',
       altText: 'The IndiAffect High-Waist Leggings',
-      width: 533,
-      height: 666,
+      width: 1000,
+      height: 1250,
     },
     available: true,
   },
@@ -128,10 +128,10 @@ export const DEMO_PRODUCTS = [
       minVariantPrice: { amount: '55.00', currencyCode: 'USD' },
     },
     featuredImage: {
-      url: 'https://theindiaffectstore.myshopify.com/cdn/shop/files/9498466125777766965_2048.jpg?v=1786188294&width=533',
+      url: 'https://theindiaffectstore.myshopify.com/cdn/shop/files/9498466125777766965_2048.jpg?v=1786188294&width=1000',
       altText: '"I Have An Affect On People" Sweatshirt',
-      width: 533,
-      height: 666,
+      width: 1000,
+      height: 1250,
     },
     available: true,
   },
@@ -164,7 +164,7 @@ export const HERO_IMAGES = {
   // Real hero photo — "EXCUSE ME / I HAVE AN AFFECT ON PEOPLE" text is
   // already baked into this image on the live site, not overlaid by the theme.
   primary:
-    'https://theindiaffectstore.myshopify.com/cdn/shop/files/theindiaffect_theindiaffectstore.png?v=1786157951&width=2000',
+    'https://theindiaffectstore.myshopify.com/cdn/shop/files/theindiaffect_theindiaffectstore.png?v=1786157951&width=1366',
   secondary:
     'https://theindiaffectstore.myshopify.com/cdn/shop/files/theindiaffect_theindiaffectstore_2.png?v=1786161987&width=2000',
 };

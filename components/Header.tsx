@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -8,7 +8,15 @@ import { LOGO_IMAGE } from '@/lib/demo-data';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const navigation = [
     { name: 'Bundles', href: '/collections/bundles' },
@@ -21,7 +29,7 @@ export default function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-paper/95 backdrop-blur-sm border-b border-silver/10">
+    <header className={`sticky top-0 z-50 bg-paper/95 backdrop-blur-sm border-b border-silver/10 transition-shadow duration-300 ${scrolled ? 'shadow-md' : ''}`}>
       {/* Scrolling announcement ticker */}
       <div className="bg-ink text-paper text-xs uppercase tracking-wider overflow-hidden whitespace-nowrap py-2">
         <div className="animate-[marquee_28s_linear_infinite] inline-block">
@@ -98,24 +106,26 @@ export default function Header() {
         </div>
 
         {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <nav className="lg:hidden border-t border-silver/10 py-4">
-            <div className="flex flex-col gap-4">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`text-sm font-medium transition-colors hover:text-pink ${
-                    pathname === item.href ? 'text-pink' : 'text-ink'
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-          </nav>
-        )}
+        <nav
+          className={`lg:hidden overflow-hidden transition-all duration-300 ease-smooth ${
+            mobileMenuOpen ? 'max-h-96 border-t border-silver/10 py-4' : 'max-h-0'
+          }`}
+        >
+          <div className="flex flex-col gap-4">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className={`text-sm font-medium transition-colors hover:text-pink ${
+                  pathname === item.href ? 'text-pink' : 'text-ink'
+                }`}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+        </nav>
       </div>
     </header>
   );

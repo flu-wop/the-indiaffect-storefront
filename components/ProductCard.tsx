@@ -18,6 +18,8 @@ interface ProductCardProps {
       width: number;
       height: number;
     };
+    available?: boolean;
+    description?: string;
   };
 }
 
@@ -51,10 +53,17 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         )}
         
-        {/* Quick Add Button - Shows on hover */}
+        {/* Sold out ribbon */}
+        {product.available === false && (
+          <div className="absolute top-3 left-3 bg-charcoal/90 border border-gold/60 text-gold text-[10px] uppercase tracking-widest px-3 py-1 rounded-full">
+            Sold Out
+          </div>
+        )}
+
+        {/* Quick Add / Notify Me - Shows on hover */}
         <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
           <button className="w-full btn-primary text-xs py-3">
-            Quick Add
+            {product.available === false ? 'Notify Me When Back' : 'Quick Add'}
           </button>
         </div>
       </div>
@@ -64,6 +73,11 @@ export default function ProductCard({ product }: ProductCardProps) {
         <h3 className="text-sm md:text-base font-medium text-off-white group-hover:text-gold transition-colors line-clamp-2">
           {product.title}
         </h3>
+        {product.description && (
+          <p className="text-silver text-xs line-clamp-2">
+            {product.description}
+          </p>
+        )}
         <p className="text-gold font-semibold">
           {formattedPrice}
         </p>

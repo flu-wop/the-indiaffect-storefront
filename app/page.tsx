@@ -1,15 +1,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { getProducts, getCollections } from '@/lib/shopify';
 import TrustBar from '@/components/TrustBar';
 import ProductCard from '@/components/ProductCard';
 import TextureSwatch from '@/components/TextureSwatch';
 import NewsletterForm from '@/components/NewsletterForm';
+import { DEMO_PRODUCTS, HERO_IMAGES, FOUNDER } from '@/lib/demo-data';
 
 export default async function HomePage() {
-  // Fetch products (will return empty array if Shopify not connected)
-  const products = await getProducts(8);
-  const collections = await getCollections(6);
+  // Demo mode: real product data pulled from India's live store, held as static
+  // data until the Shopify Storefront API is connected. Swap this for
+  // getProducts(8) once real credentials are wired up.
+  const products = DEMO_PRODUCTS;
 
   return (
     <>
@@ -18,13 +19,11 @@ export default async function HomePage() {
         {/* Background Image - Replace with actual hero image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/hero-image.jpg"
-            alt="Premium Virgin Hair"
+            src={HERO_IMAGES.primary}
+            alt="The IndiAffect Store"
             fill
             className="object-cover"
             priority
-            placeholder="blur"
-            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCwAA8A/9k="
           />
           <div className="absolute inset-0 gradient-overlay" />
         </div>
@@ -32,24 +31,24 @@ export default async function HomePage() {
         {/* Hero Content */}
         <div className="container relative z-10 text-center">
           <p className="text-gold text-sm md:text-base uppercase tracking-widest mb-4">
-            Premium Quality Hair
+            Create, Influence, Evolve
           </p>
           <h1 className="text-hero font-heading mb-6 text-balance">
-            Premium Virgin Hair
+            The IndiAffect
             <br />
-            <span className="text-gold">Zero Shedding • US-Based</span>
+            <span className="text-gold">Hair • Merch • Business Resources</span>
           </h1>
           <p className="text-lg md:text-xl text-off-white/80 mb-10 max-w-2xl mx-auto text-balance">
-            Soft, thick, long-lasting bundles & wigs. Free shipping on 3+ bundles.
+            Virgin &amp; raw hair, statement merch, and the "Broke 2 Boss" business series — built by India Renee.
           </p>
-          
-          {/* CTAs */}
+
+          {/* CTAs — leads with merch (in stock) instead of the sold-out hero product */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/collections/bundles" className="btn-primary">
-              Shop Bundles
+            <Link href="/collections/merch" className="btn-primary">
+              Shop Merch
             </Link>
-            <Link href="/collections/wigs" className="btn-secondary">
-              Shop Wigs
+            <Link href="/collections/hair-collection" className="btn-secondary">
+              Shop Hair Collection
             </Link>
           </div>
         </div>
@@ -113,35 +112,36 @@ export default async function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Texture Swatches - These work even without Shopify */}
+            {/* Texture Swatches — using real store photos as stand-ins until
+                dedicated texture photography is shot */}
             <TextureSwatch
               title="Straight"
-              image="/textures/straight.jpg"
+              image={DEMO_PRODUCTS[1].featuredImage.url}
               href="/collections/straight"
             />
             <TextureSwatch
               title="Body Wave"
-              image="/textures/body-wave.jpg"
+              image={DEMO_PRODUCTS[2].featuredImage.url}
               href="/collections/body-wave"
             />
             <TextureSwatch
               title="Deep Wave"
-              image="/textures/deep-wave.jpg"
+              image={DEMO_PRODUCTS[3].featuredImage.url}
               href="/collections/deep-wave"
             />
             <TextureSwatch
               title="Loose Wave"
-              image="/textures/loose-wave.jpg"
+              image={DEMO_PRODUCTS[4].featuredImage.url}
               href="/collections/loose-wave"
             />
             <TextureSwatch
               title="Kinky Curly"
-              image="/textures/kinky-curly.jpg"
+              image={DEMO_PRODUCTS[5].featuredImage.url}
               href="/collections/kinky-curly"
             />
             <TextureSwatch
               title="Water Wave"
-              image="/textures/water-wave.jpg"
+              image={DEMO_PRODUCTS[6].featuredImage.url}
               href="/collections/water-wave"
             />
           </div>
@@ -206,6 +206,36 @@ export default async function HomePage() {
             <p className="text-silver text-sm">
               Tag us @theindiaffect to be featured
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Meet The Founder */}
+      <section className="section">
+        <div className="container">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-lg">
+              <Image
+                src={FOUNDER.image}
+                alt={FOUNDER.name}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div>
+              <p className="text-gold text-sm uppercase tracking-widest mb-2">
+                Meet The Founder
+              </p>
+              <h2 className="text-heading-1 font-heading mb-6">{FOUNDER.name}</h2>
+              <p className="text-off-white/90 text-lg mb-4 italic">
+                &ldquo;{FOUNDER.quote}&rdquo;
+              </p>
+              <p className="text-silver mb-6">{FOUNDER.tagline}</p>
+              <p className="text-gold font-heading text-xl tracking-wide mb-2">
+                {FOUNDER.challenge}
+              </p>
+              <p className="text-silver text-sm">{FOUNDER.signature}</p>
+            </div>
           </div>
         </div>
       </section>

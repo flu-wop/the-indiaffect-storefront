@@ -9,14 +9,13 @@ export default function Header() {
   const pathname = usePathname();
 
   const navigation = [
-    { name: 'Shop All', href: '/collections/all' },
+    { name: 'Bundles', href: '/collections/bundles' },
+    { name: 'Closures & Frontals', href: '/collections/lace-collection' },
     { name: 'Wigs', href: '/collections/wigs' },
-    { name: 'Raw Hair', href: '/collections/raw-hair' },
-    { name: 'Virgin Hair', href: '/collections/virgin-hair' },
-    { name: 'HD Lace', href: '/collections/hd-lace' },
-    { name: 'Vendors', href: '/vendors' },
-    { name: 'Ebooks', href: '/ebooks' },
-    { name: 'FAQ', href: '/faq' },
+    { name: 'Merch', href: '/collections/merch' },
+    { name: 'Digital Products', href: '/collections/digital-products' },
+    { name: 'Book', href: '/pages/contact' },
+    { name: 'Contact', href: '/pages/contact' },
   ];
 
   return (

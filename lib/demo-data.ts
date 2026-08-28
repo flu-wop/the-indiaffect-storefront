@@ -22,6 +22,13 @@ export const DEMO_PRODUCTS = [
     // replaces the dead end with a "Notify Me" CTA and pulls it out of the
     // hero slot so a sold-out item isn't the first thing visitors see.
     available: false,
+    category: 'bundles',
+    gallery: [
+      'https://theindiaffectstore.myshopify.com/cdn/shop/files/2E0E1E4F-F8F7-421C-BB06-4B5E040A1BCC.png?v=1784507503&width=1254',
+      'https://theindiaffectstore.myshopify.com/cdn/shop/files/CE6BFEF4-6B58-436C-9EDC-4A2C8C95FB2B.png?v=1784507588&width=1254',
+      'https://theindiaffectstore.myshopify.com/cdn/shop/files/897BC5F4-ACAD-42AB-932D-3A3487DD05BD.png?v=1784507529&width=1254',
+      'https://theindiaffectstore.myshopify.com/cdn/shop/files/37D84483-5B30-443F-8F64-DFF8BAECD1F2.png?v=1784507356&width=1254',
+    ],
   },
   {
     id: 'mini-shorts',
@@ -38,6 +45,7 @@ export const DEMO_PRODUCTS = [
       height: 1250,
     },
     available: true,
+    category: 'merch',
   },
   {
     id: 'mini-top',
@@ -54,6 +62,7 @@ export const DEMO_PRODUCTS = [
       height: 1250,
     },
     available: true,
+    category: 'merch',
   },
   {
     id: 'cropped-tee',
@@ -70,6 +79,7 @@ export const DEMO_PRODUCTS = [
       height: 1250,
     },
     available: true,
+    category: 'merch',
   },
   {
     id: 'cosmetic-bag',
@@ -86,6 +96,7 @@ export const DEMO_PRODUCTS = [
       height: 1250,
     },
     available: true,
+    category: 'merch',
   },
   {
     id: 'throw-pillow',
@@ -102,6 +113,7 @@ export const DEMO_PRODUCTS = [
       height: 1250,
     },
     available: true,
+    category: 'merch',
   },
   {
     id: 'leggings',
@@ -118,6 +130,7 @@ export const DEMO_PRODUCTS = [
       height: 1250,
     },
     available: true,
+    category: 'merch',
   },
   {
     id: 'sweatshirt',
@@ -134,6 +147,7 @@ export const DEMO_PRODUCTS = [
       height: 1250,
     },
     available: true,
+    category: 'merch',
   },
 ];
 
@@ -168,3 +182,31 @@ export const HERO_IMAGES = {
   secondary:
     'https://theindiaffectstore.myshopify.com/cdn/shop/files/theindiaffect_theindiaffectstore_2.png?v=1786161987&width=2000',
 };
+
+export type DemoProduct = (typeof DEMO_PRODUCTS)[number];
+
+export function getProductByHandle(handle: string): DemoProduct | undefined {
+  return DEMO_PRODUCTS.find((p) => p.handle === handle);
+}
+
+// Collection handle -> matching category + display metadata. Collections
+// with zero live products (wigs, closures, digital-products) still resolve
+// so the nav doesn't 404 — the page just shows an honest "nothing here yet"
+// state instead of fabricating inventory that doesn't exist on the real store.
+export const COLLECTIONS: Record<string, { title: string; category: string | null }> = {
+  all: { title: 'All Products', category: null },
+  bundles: { title: 'Bundles', category: 'bundles' },
+  'hair-collection': { title: 'Hair Collection', category: 'bundles' },
+  merch: { title: 'Merch', category: 'merch' },
+  wigs: { title: 'Wigs', category: '__none__' },
+  'lace-collection': { title: 'Closures & Frontals', category: '__none__' },
+  'digital-products': { title: 'Digital Products', category: '__none__' },
+  'business-collection': { title: 'Broke 2 Boss — Business Resources', category: '__none__' },
+};
+
+export function getProductsByCollection(handle: string): DemoProduct[] {
+  const collection = COLLECTIONS[handle];
+  if (!collection) return [];
+  if (collection.category === null) return DEMO_PRODUCTS;
+  return DEMO_PRODUCTS.filter((p) => p.category === collection.category);
+}

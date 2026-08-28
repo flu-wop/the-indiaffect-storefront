@@ -5,11 +5,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { LOGO_IMAGE } from '@/lib/demo-data';
+import { useCart } from '@/lib/cart-context';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const { itemCount, openCart } = useCart();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -24,8 +26,8 @@ export default function Header() {
     { name: 'Wigs', href: '/collections/wigs' },
     { name: 'Merch', href: '/collections/merch' },
     { name: 'Digital Products', href: '/collections/digital-products' },
-    { name: 'Book', href: '/pages/contact' },
-    { name: 'Contact', href: '/pages/contact' },
+    { name: 'Book', href: '/book' },
+    { name: 'Contact', href: '/contact' },
   ];
 
   return (
@@ -80,13 +82,15 @@ export default function Header() {
             </Link>
 
             {/* Cart */}
-            <button className="p-2 hover:text-pink transition-colors relative">
+            <button onClick={openCart} className="p-2 hover:text-pink transition-colors relative" aria-label="Open cart">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
               </svg>
-              <span className="absolute -top-1 -right-1 bg-pink text-ink text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
-                0
-              </span>
+              {itemCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-pink text-ink text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                  {itemCount}
+                </span>
+              )}
             </button>
 
             {/* Mobile Menu Button */}

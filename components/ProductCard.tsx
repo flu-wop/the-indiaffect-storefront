@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useCart } from '@/lib/cart-context';
 
 interface ProductCardProps {
   product: {
@@ -28,11 +29,25 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const [loaded, setLoaded] = useState(false);
+  const { addItem } = useCart();
   const price = parseFloat(product.priceRange.minVariantPrice.amount);
   const formattedPrice = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: product.priceRange.minVariantPrice.currencyCode,
   }).format(price);
+
+  const handleQuickAdd = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (product.available === false) return; // Notify Me has no cart action
+    addItem({
+      id: product.id,
+      handle: product.handle,
+      title: product.title,
+      price,
+      image: product.featuredImage?.url || '',
+    });
+  };
 
   return (
     <Link
@@ -69,7 +84,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         {/* Quick Add / Notify Me - Shows on hover */}
         <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-          <button className="w-full btn-primary text-xs py-3">
+          <button onClick={handleQuickAdd} className="w-full btn-primary text-xs py-3">
             {product.available === false ? 'Notify Me When Back' : 'Quick Add'}
           </button>
         </div>

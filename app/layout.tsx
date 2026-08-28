@@ -34,20 +34,20 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'TheIndiAffect - Premium Virgin Hair Extensions & Wigs',
-  description: 'Luxury virgin hair bundles, wigs, and closures. Zero shedding, thick, long-lasting. US-based with fast shipping. Shop premium body wave, deep wave, and straight textures.',
-  keywords: 'virgin hair, hair bundles, wigs, closures, body wave, deep wave, straight hair, premium hair extensions',
+  title: 'The IndiAffect — Hair, Merch & Business Resources',
+  description: 'Virgin and raw hair, statement merch, and the "Broke 2 Boss" business series — built by India Renee.',
+  keywords: 'virgin hair, hair bundles, wigs, closures, IndiAffect, India Renee',
   openGraph: {
-    title: 'TheIndiAffect - Premium Virgin Hair',
-    description: 'Luxury virgin hair bundles & wigs. Zero shedding. US-based.',
+    title: 'The IndiAffect',
+    description: 'Virgin and raw hair, statement merch, and the "Broke 2 Boss" business series — built by India Renee.',
     type: 'website',
     locale: 'en_US',
-    siteName: 'TheIndiAffect',
+    siteName: 'The IndiAffect',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'TheIndiAffect - Premium Virgin Hair',
-    description: 'Luxury virgin hair bundles & wigs. Zero shedding. US-based.',
+    title: 'The IndiAffect',
+    description: 'Virgin and raw hair, statement merch, and the "Broke 2 Boss" business series — built by India Renee.',
   },
 };
 

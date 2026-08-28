@@ -6,10 +6,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { LOGO_IMAGE } from '@/lib/demo-data';
 import { useCart } from '@/lib/cart-context';
+import SearchOverlay from '@/components/SearchOverlay';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const pathname = usePathname();
   const { itemCount, openCart } = useCart();
 
@@ -68,7 +70,7 @@ export default function Header() {
           {/* Right Icons */}
           <div className="flex items-center gap-4">
             {/* Search */}
-            <button className="p-2 hover:text-pink transition-colors">
+            <button onClick={() => setSearchOpen(true)} aria-label="Search products" className="p-2 hover:text-pink transition-colors">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
@@ -131,6 +133,7 @@ export default function Header() {
           </div>
         </nav>
       </div>
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>
   );
 }

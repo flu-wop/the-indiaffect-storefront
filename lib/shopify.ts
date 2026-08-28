@@ -7,7 +7,11 @@ const STOREFRONT_ACCESS_TOKEN = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCES
 const client = SHOPIFY_STORE_DOMAIN && STOREFRONT_ACCESS_TOKEN
   ? createStorefrontApiClient({
       storeDomain: SHOPIFY_STORE_DOMAIN,
-      apiVersion: '2025-01',
+      // Was pinned to 2025-01, which is past Shopify's ~12-month support
+      // window as of today. Bumped to the last version before 2026-07's
+      // breaking changes to cart/product query structures — upgrading
+      // further will need the queries below re-tested against a live store.
+      apiVersion: '2026-04',
       publicAccessToken: STOREFRONT_ACCESS_TOKEN,
     })
   : null;

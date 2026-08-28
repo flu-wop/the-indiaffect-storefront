@@ -157,9 +157,14 @@ export const FOUNDER = {
   signature: '- xo, Indii',
 };
 
+export const LOGO_IMAGE =
+  'https://theindiaffectstore.myshopify.com/cdn/shop/files/B510A06C-5D18-4C82-AD4C-12C98EE56F71.png?v=1783822384&width=600';
+
 export const HERO_IMAGES = {
+  // Real hero photo — "EXCUSE ME / I HAVE AN AFFECT ON PEOPLE" text is
+  // already baked into this image on the live site, not overlaid by the theme.
   primary:
-    'https://theindiaffectstore.myshopify.com/cdn/shop/files/theindiaffect_theindiaffectstore_1.png?v=1786161390&width=2000',
+    'https://theindiaffectstore.myshopify.com/cdn/shop/files/theindiaffect_theindiaffectstore.png?v=1786157951&width=2000',
   secondary:
     'https://theindiaffectstore.myshopify.com/cdn/shop/files/theindiaffect_theindiaffectstore_2.png?v=1786161987&width=2000',
 };

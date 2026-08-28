@@ -36,7 +36,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       className="group block card-hover"
     >
       {/* Product Image */}
-      <div className="relative aspect-[3/4] overflow-hidden rounded-lg mb-4 bg-charcoal-light">
+      <div className="relative aspect-[3/4] overflow-hidden rounded-lg mb-4 bg-paper-dim">
         {product.featuredImage ? (
           <Image
             src={product.featuredImage.url}
@@ -55,7 +55,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         
         {/* Sold out ribbon */}
         {product.available === false && (
-          <div className="absolute top-3 left-3 bg-charcoal/90 border border-gold/60 text-gold text-[10px] uppercase tracking-widest px-3 py-1 rounded-full">
+          <div className="absolute top-3 left-3 bg-paper/90 border border-pink/60 text-pink text-[10px] uppercase tracking-widest px-3 py-1 rounded-full">
             Sold Out
           </div>
         )}
@@ -70,7 +70,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       {/* Product Info */}
       <div className="space-y-1">
-        <h3 className="text-sm md:text-base font-medium text-off-white group-hover:text-gold transition-colors line-clamp-2">
+        <h3 className="font-heading text-base md:text-lg text-ink group-hover:text-pink transition-colors line-clamp-2">
           {product.title}
         </h3>
         {product.description && (
@@ -78,7 +78,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             {product.description}
           </p>
         )}
-        <p className="text-gold font-semibold">
+        <p className="text-pink font-semibold">
           {formattedPrice}
         </p>
       </div>

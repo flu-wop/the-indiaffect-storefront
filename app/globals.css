@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -19,13 +24,13 @@
 @layer components {
   /* Button styles */
   .btn-primary {
-    @apply bg-gold text-charcoal px-8 py-4 font-semibold uppercase tracking-wider text-sm 
-           hover:bg-gold-light hover:scale-102 transition-all duration-300 ease-smooth;
+    @apply bg-pink text-ink px-8 py-4 font-semibold uppercase tracking-wider text-sm 
+           hover:bg-pink-light hover:scale-102 transition-all duration-300 ease-smooth;
   }
 
   .btn-secondary {
-    @apply border-2 border-gold text-gold px-8 py-4 font-semibold uppercase tracking-wider text-sm
-           hover:bg-gold hover:text-charcoal hover:scale-102 transition-all duration-300 ease-smooth;
+    @apply border-2 border-pink text-pink px-8 py-4 font-semibold uppercase tracking-wider text-sm
+           hover:bg-pink hover:text-ink hover:scale-102 transition-all duration-300 ease-smooth;
   }
 
   /* Card hover effects */
@@ -40,7 +45,7 @@
 
   /* Skeleton loaders */
   .skeleton {
-    @apply animate-pulse bg-charcoal-light rounded;
+    @apply animate-pulse bg-paper-dim rounded;
   }
 }
 
@@ -49,7 +54,13 @@
     text-wrap: balance;
   }
 
+  /* Darkens the hero photo evenly so white/pink overlay text stays legible,
+     matching the live site's bold text-over-photo hero treatment */
   .gradient-overlay {
-    @apply bg-gradient-to-t from-charcoal/90 via-charcoal/50 to-transparent;
+    @apply bg-ink/45;
+  }
+
+  .text-shadow-hero {
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
   }
 }

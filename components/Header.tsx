@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { LOGO_IMAGE } from '@/lib/demo-data';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -19,12 +21,23 @@ export default function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-charcoal/95 backdrop-blur-sm border-b border-silver/10">
+    <header className="sticky top-0 z-50 bg-paper/95 backdrop-blur-sm border-b border-silver/10">
+      {/* Scrolling announcement ticker */}
+      <div className="bg-ink text-paper text-xs uppercase tracking-wider overflow-hidden whitespace-nowrap py-2">
+        <div className="animate-[marquee_28s_linear_infinite] inline-block">
+          {Array(4).fill('Creator Kits Coming Soon  ★  Virgin Hair Bundles Starting At $35  ★  Digital Product Sale Ends Soon  ★  ').join('')}
+        </div>
+      </div>
+      {/* Brand tagline bar */}
+      <div className="bg-ink text-pink text-center text-xs uppercase tracking-[0.3em] py-2 border-t border-paper/10">
+        Create , Influence , Evolve
+      </div>
+
       <div className="container">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <Link href="/" className="text-2xl font-heading text-gold hover:text-gold-light transition-colors">
-            TheIndiAffect
+          {/* Logo — real wordmark asset from the live site */}
+          <Link href="/" className="relative h-10 w-40 shrink-0 hover:opacity-80 transition-opacity">
+            <Image src={LOGO_IMAGE} alt="The IndiAffect" fill className="object-contain object-left" priority />
           </Link>
 
           {/* Desktop Navigation */}
@@ -33,8 +46,8 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`text-sm font-medium transition-colors hover:text-gold ${
-                  pathname === item.href ? 'text-gold' : 'text-off-white'
+                className={`text-sm font-medium transition-colors hover:text-pink ${
+                  pathname === item.href ? 'text-pink' : 'text-ink'
                 }`}
               >
                 {item.name}
@@ -45,25 +58,25 @@ export default function Header() {
           {/* Right Icons */}
           <div className="flex items-center gap-4">
             {/* Search */}
-            <button className="p-2 hover:text-gold transition-colors">
+            <button className="p-2 hover:text-pink transition-colors">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </button>
 
             {/* Account */}
-            <Link href="/account" className="p-2 hover:text-gold transition-colors">
+            <Link href="/account" className="p-2 hover:text-pink transition-colors">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
             </Link>
 
             {/* Cart */}
-            <button className="p-2 hover:text-gold transition-colors relative">
+            <button className="p-2 hover:text-pink transition-colors relative">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
               </svg>
-              <span className="absolute -top-1 -right-1 bg-gold text-charcoal text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+              <span className="absolute -top-1 -right-1 bg-pink text-ink text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
                 0
               </span>
             </button>
@@ -71,7 +84,7 @@ export default function Header() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 hover:text-gold transition-colors"
+              className="lg:hidden p-2 hover:text-pink transition-colors"
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 {mobileMenuOpen ? (
@@ -93,8 +106,8 @@ export default function Header() {
                   key={item.name}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`text-sm font-medium transition-colors hover:text-gold ${
-                    pathname === item.href ? 'text-gold' : 'text-off-white'
+                  className={`text-sm font-medium transition-colors hover:text-pink ${
+                    pathname === item.href ? 'text-pink' : 'text-ink'
                   }`}
                 >
                   {item.name}

@@ -24,7 +24,7 @@ export default function TextureSwatch({ title, image, href }: TextureSwatchProps
         />
         
         {/* Dark overlay */}
-        <div className="absolute inset-0 bg-charcoal/40 group-hover:bg-charcoal/60 transition-colors" />
+        <div className="absolute inset-0 bg-paper/40 group-hover:bg-paper/60 transition-colors" />
       </div>
 
       {/* Content */}
@@ -32,7 +32,7 @@ export default function TextureSwatch({ title, image, href }: TextureSwatchProps
         <h3 className="text-heading-3 font-heading text-white mb-2 group-hover:scale-105 transition-transform">
           {title}
         </h3>
-        <div className="w-12 h-px bg-gold group-hover:w-16 transition-all" />
+        <div className="w-12 h-px bg-pink group-hover:w-16 transition-all" />
         <p className="mt-4 text-sm text-white/80 group-hover:text-white transition-colors">
           Shop Now →
         </p>

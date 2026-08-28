@@ -40,7 +40,7 @@ export default function NewsletterForm() {
           placeholder="Enter your email"
           required
           disabled={status === 'loading'}
-          className="flex-1 px-6 py-4 bg-charcoal-light border border-silver/20 rounded focus:outline-none focus:border-gold text-off-white placeholder:text-silver disabled:opacity-50"
+          className="flex-1 px-6 py-4 bg-paper-dim border border-silver/20 rounded focus:outline-none focus:border-pink text-ink placeholder:text-silver disabled:opacity-50"
         />
         <button
           type="submit"
@@ -52,7 +52,7 @@ export default function NewsletterForm() {
       </div>
       
       {message && (
-        <p className={`mt-4 text-sm ${status === 'success' ? 'text-gold' : 'text-red-400'}`}>
+        <p className={`mt-4 text-sm ${status === 'success' ? 'text-pink' : 'text-red-400'}`}>
           {message}
         </p>
       )}

@@ -43,16 +43,16 @@ export default function TrustBar() {
   ];
 
   return (
-    <section className="border-y border-silver/20 bg-charcoal-light">
+    <section className="bg-ink">
       <div className="container">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 py-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 divide-x divide-paper/10">
           {badges.map((badge, index) => (
             <div
               key={index}
-              className="flex flex-col items-center text-center gap-3"
+              className="flex flex-col items-center text-center gap-2 py-6 px-2"
             >
-              <div className="text-gold">{badge.icon}</div>
-              <p className="text-xs md:text-sm font-medium text-off-white/90">
+              <div className="text-pink">{badge.icon}</div>
+              <p className="text-xs md:text-sm font-medium text-paper">
                 {badge.text}
               </p>
             </div>

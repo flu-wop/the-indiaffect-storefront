@@ -9,27 +9,24 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Main backgrounds
-        'charcoal': '#0a0a0a',
-        'charcoal-light': '#111111',
-        
-        // Text colors
-        'off-white': '#f5f5f5',
-        'warm-white': '#fafafa',
-        
-        // Accent - warm muted gold (more expensive than lavender)
-        'gold': '#d4af37',
-        'gold-light': '#e6c860',
-        'gold-dark': '#b8941f',
-        
-        // Secondary accents
-        'silver': '#a0a0a0',
-        'silver-light': '#cccccc',
-        'silver-dark': '#7a7a7a',
+        // Matches the live store: white base, black text, hot-pink accent
+        'ink': '#111111',
+        'paper': '#ffffff',
+        'paper-dim': '#f7f7f7',
+        'pink': '#ff4fc3',
+        'pink-light': '#ff8ad9',
+        'pink-dark': '#e63dae',
+        'silver': '#8a8a8a',
+        'silver-light': '#d8d8d8',
+        'silver-dark': '#555555',
       },
       fontFamily: {
-        // Elegant serif for headings
+        // Elegant serif for the "Indi" half of the wordmark / headings
         heading: ['var(--font-playfair)', 'Playfair Display', 'Georgia', 'serif'],
+        // Pink cursive for the "Affect" half of the wordmark
+        script: ['var(--font-script)', 'Dancing Script', 'cursive'],
+        // Bold condensed display for section headers ("★ Trending Now ★")
+        display: ['var(--font-display)', 'Anton', 'Impact', 'sans-serif'],
         // Clean sans for body
         body: ['var(--font-inter)', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
       },

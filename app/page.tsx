@@ -2,11 +2,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import TrustBar from '@/components/TrustBar';
 import ProductCard from '@/components/ProductCard';
+import FeaturedProduct from '@/components/FeaturedProduct';
 import Reveal from '@/components/Reveal';
 import { DEMO_PRODUCTS, HERO_IMAGES, FOUNDER } from '@/lib/demo-data';
 
 export default function HomePage() {
-  const products = DEMO_PRODUCTS;
+  const merchProducts = DEMO_PRODUCTS.filter((p) => p.category === 'merch');
 
   return (
     <>
@@ -88,7 +89,8 @@ export default function HomePage() {
         </section>
       </Reveal>
 
-      {/* Trending Now — real section label from the live site (not "Best Sellers") */}
+      {/* Trending Now — real site shows this as a single featured product
+          (Virgin Hair Bundles), not a grid */}
       <Reveal>
         <section className="section bg-paper-dim">
           <div className="container">
@@ -97,17 +99,21 @@ export default function HomePage() {
                 <span className="text-pink mr-3">★</span>Trending Now<span className="text-pink ml-3">★</span>
               </h2>
             </div>
+            <FeaturedProduct product={DEMO_PRODUCTS[0]} />
+          </div>
+        </section>
+      </Reveal>
 
+      {/* The IndiAffect Merch — separate section on the live site, plain
+          heading (not star-styled), merch only (bundles excluded) */}
+      <Reveal>
+        <section className="section">
+          <div className="container">
+            <h2 className="font-heading text-3xl text-ink mb-8">The IndiAffect Merch</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {products.slice(0, 8).map((product) => (
+              {merchProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
-            </div>
-
-            <div className="text-center mt-12">
-              <Link href="/collections/all" className="btn-secondary">
-                View All Products
-              </Link>
             </div>
           </div>
         </section>

@@ -32,6 +32,10 @@ export default function Footer() {
         <p className="text-center text-silver text-sm">
           © {new Date().getFullYear()} The IndiAffect. All rights reserved.
         </p>
+        <p className="mt-2 text-center text-silver text-xs">
+          Designed by{" "}
+          <a href="https://in-flu-ential.vercel.app" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">IN-FLU-ENTIAL</a>
+        </p>
       </div>
     </footer>
   );

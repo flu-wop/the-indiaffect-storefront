@@ -2,9 +2,7 @@ export default function RefundPolicyPage() {
   return (
     <div className="section">
       <div className="container max-w-3xl">
-        <h1 className="font-display uppercase text-3xl md:text-5xl text-ink tracking-wide text-center mb-12">
-          <span className="text-pink mr-3">★</span>Refund Policy<span className="text-pink ml-3">★</span>
-        </h1>
+        <h1 className="page-title text-center mb-14">Refund Policy</h1>
         <div className="space-y-6 text-silver-dark leading-relaxed">
           <p>Approved refunds are issued to the original payment method within 5-10 business days of us receiving your return.</p>
           <ul className="list-disc pl-6 space-y-2 text-sm">

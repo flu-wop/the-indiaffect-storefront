@@ -4,16 +4,36 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useLenis } from 'lenis/react';
 import { LOGO_IMAGE } from '@/lib/demo-data';
 import { useCart } from '@/lib/cart-context';
 import SearchOverlay from '@/components/SearchOverlay';
+import Marquee from '@/components/Marquee';
+
+const NAVIGATION = [
+  { name: 'Bundles', href: '/collections/bundles' },
+  { name: 'Closures & Frontals', href: '/collections/lace-collection' },
+  { name: 'Wigs', href: '/collections/wigs' },
+  { name: 'Merch', href: '/collections/merch' },
+  { name: 'Digital Products', href: '/collections/digital-products' },
+  { name: 'Book', href: '/book' },
+  { name: 'Contact', href: '/contact' },
+];
+
+const TICKER = [
+  'Creator Kits Coming Soon',
+  'Virgin Hair Bundles Starting At $35',
+  'Digital Product Sale Ends Soon',
+];
 
 export default function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const pathname = usePathname();
   const { itemCount, openCart } = useCart();
+  const lenis = useLenis();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -22,118 +42,174 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const navigation = [
-    { name: 'Bundles', href: '/collections/bundles' },
-    { name: 'Closures & Frontals', href: '/collections/lace-collection' },
-    { name: 'Wigs', href: '/collections/wigs' },
-    { name: 'Merch', href: '/collections/merch' },
-    { name: 'Digital Products', href: '/collections/digital-products' },
-    { name: 'Book', href: '/book' },
-    { name: 'Contact', href: '/contact' },
-  ];
+  // Close the menu on navigation
+  useEffect(() => setMenuOpen(false), [pathname]);
+
+  // Lock page scroll (native + Lenis) while the mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    if (menuOpen) lenis?.stop();
+    else lenis?.start();
+    return () => {
+      document.body.style.overflow = '';
+      lenis?.start();
+    };
+  }, [menuOpen, lenis]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setMenuOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [menuOpen]);
 
   return (
-    <header className={`sticky top-0 z-50 bg-paper/95 backdrop-blur-sm border-b border-silver/10 transition-shadow duration-300 ${scrolled ? 'shadow-md' : ''}`}>
-      {/* Scrolling announcement ticker */}
-      <div className="bg-ink text-paper text-xs uppercase tracking-wider overflow-hidden whitespace-nowrap py-2">
-        <div className="animate-[marquee_28s_linear_infinite] inline-block">
-          {Array(4).fill('Creator Kits Coming Soon  ★  Virgin Hair Bundles Starting At $35  ★  Digital Product Sale Ends Soon  ★  ').join('')}
+    <>
+      <header
+        className={`sticky top-0 z-50 border-b backdrop-blur-xl transition-all duration-500 ease-cinematic ${
+          menuOpen ? 'bg-paper' : 'bg-paper/90'
+        } ${scrolled ? 'border-ink/10 shadow-[0_8px_30px_-18px_rgba(0,0,0,0.35)]' : 'border-transparent'}`}
+      >
+        {/* Announcement ticker */}
+        <div className="bg-ink py-2 text-[11px] font-medium uppercase tracking-label text-paper/90">
+          <Marquee items={TICKER} duration={38} itemClassName="" />
         </div>
-      </div>
-      {/* Brand tagline bar */}
-      <div className="bg-ink text-pink text-center text-xs uppercase tracking-[0.3em] py-2 border-t border-paper/10">
-        Create , Influence , Evolve
-      </div>
 
-      <div className="container">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo — real wordmark asset from the live site */}
-          <Link href="/" className="relative h-10 w-40 shrink-0 hover:opacity-80 transition-opacity">
-            <Image src={LOGO_IMAGE} alt="The IndiAffect" fill className="object-contain object-left" priority />
-          </Link>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`text-sm font-medium transition-colors hover:text-pink ${
-                  pathname === item.href ? 'text-pink' : 'text-ink'
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
-
-          {/* Right Icons */}
-          <div className="flex items-center gap-4">
-            {/* Search */}
-            <button onClick={() => setSearchOpen(true)} aria-label="Search products" className="p-2 hover:text-pink transition-colors">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </button>
-
-            {/* Account */}
-            <Link href="/account" className="p-2 hover:text-pink transition-colors">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
+        <div className="frame">
+          <div className={`flex items-center justify-between transition-all duration-500 ease-cinematic ${scrolled ? 'h-16' : 'h-20'}`}>
+            {/* Logo — real wordmark asset from the live store (dark-on-white, so it
+                sits on the white header; multiply keeps its edges clean) */}
+            <Link href="/" className="relative -ml-3 h-12 w-40 shrink-0 overflow-hidden transition-opacity hover:opacity-80 md:-ml-4 md:h-14 md:w-48">
+              <Image
+                src={LOGO_IMAGE}
+                alt="The IndiAffect"
+                fill
+                className="origin-left scale-[1.9] object-contain object-left md:scale-[2.1]"
+                priority
+              />
             </Link>
 
-            {/* Cart */}
-            <button onClick={openCart} className="p-2 hover:text-pink transition-colors relative" aria-label="Open cart">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-              </svg>
-              {itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-pink text-ink text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
-                  {itemCount}
-                </span>
-              )}
-            </button>
+            {/* Desktop navigation */}
+            <nav className="hidden items-center gap-7 xl:flex">
+              {NAVIGATION.map((item) => {
+                const active = pathname === item.href;
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className={`group relative py-1 text-[12px] font-medium uppercase tracking-[0.14em] transition-colors duration-300 ${
+                      active ? 'text-pink' : 'text-ink hover:text-pink'
+                    }`}
+                  >
+                    {item.name}
+                    <span
+                      className={`absolute -bottom-0.5 left-0 h-px bg-pink transition-all duration-500 ease-cinematic ${
+                        active ? 'w-full' : 'w-0 group-hover:w-full'
+                      }`}
+                    />
+                  </Link>
+                );
+              })}
+            </nav>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 hover:text-pink transition-colors"
-            >
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {mobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            {/* Right icons */}
+            <div className="flex items-center gap-1 sm:gap-2">
+              <button
+                onClick={() => setSearchOpen(true)}
+                aria-label="Search products"
+                className="rounded-full p-2.5 transition-colors hover:bg-pink/10 hover:text-pink"
+              >
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </button>
+
+              <Link
+                href="/account"
+                aria-label="Account"
+                className="hidden rounded-full p-2.5 transition-colors hover:bg-pink/10 hover:text-pink sm:block"
+              >
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </Link>
+
+              <button
+                onClick={openCart}
+                aria-label="Open cart"
+                className="relative rounded-full p-2.5 transition-colors hover:bg-pink/10 hover:text-pink"
+              >
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+                {itemCount > 0 && (
+                  <span className="absolute right-0 top-0 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-pink text-[10px] font-bold text-ink">
+                    {itemCount}
+                  </span>
                 )}
-              </svg>
-            </button>
+              </button>
+
+              {/* Mobile hamburger */}
+              <button
+                onClick={() => setMenuOpen((v) => !v)}
+                aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+                aria-expanded={menuOpen}
+                className="relative ml-1 flex h-10 w-10 flex-col items-center justify-center gap-[7px] xl:hidden"
+              >
+                <span className={`h-px w-6 bg-ink transition-all duration-300 ${menuOpen ? 'translate-y-[4px] rotate-45' : ''}`} />
+                <span className={`h-px w-6 bg-ink transition-all duration-300 ${menuOpen ? '-translate-y-[4px] -rotate-45' : ''}`} />
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Mobile Menu */}
-        <nav
-          className={`lg:hidden overflow-hidden transition-all duration-300 ease-smooth ${
-            mobileMenuOpen ? 'max-h-96 border-t border-silver/10 py-4' : 'max-h-0'
-          }`}
-        >
-          <div className="flex flex-col gap-4">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`text-sm font-medium transition-colors hover:text-pink ${
-                  pathname === item.href ? 'text-pink' : 'text-ink'
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
-        </nav>
-      </div>
+      </header>
+
+      {/* Sibling of <header> so the header's backdrop-blur doesn't trap this fixed overlay */}
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
-    </header>
+
+      {/* Mobile menu — full-screen black overlay, a sibling of <header> so the
+          header's backdrop-blur doesn't trap the fixed positioning */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.35 }}
+            data-lenis-prevent
+            className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-ink px-6 pb-10 pt-36 xl:hidden"
+          >
+            <p className="eyebrow mb-8">Menu</p>
+            <ul className="space-y-1">
+              {NAVIGATION.map((item, i) => (
+                <motion.li
+                  key={item.name}
+                  initial={{ opacity: 0, x: -24 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.08 + i * 0.05, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <Link
+                    href={item.href}
+                    onClick={() => setMenuOpen(false)}
+                    className={`block py-1.5 font-display text-[2.6rem] uppercase leading-none transition-colors ${
+                      pathname === item.href ? 'text-pink' : 'text-paper hover:text-pink'
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                </motion.li>
+              ))}
+            </ul>
+            <div className="mt-auto flex items-center justify-between pt-12 text-[11px] font-semibold uppercase tracking-label text-paper/60">
+              <Link href="/account" onClick={() => setMenuOpen(false)} className="hover:text-pink">
+                Account
+              </Link>
+              <span className="font-script text-2xl normal-case tracking-normal text-pink">Create, Influence, Evolve</span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

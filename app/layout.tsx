@@ -4,6 +4,7 @@ import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CartDrawer from '@/components/CartDrawer';
+import SmoothScroll from '@/components/SmoothScroll';
 import { CartProvider } from '@/lib/cart-context';
 
 const playfair = Playfair_Display({
@@ -19,7 +20,7 @@ const dancingScript = Dancing_Script({
   display: 'swap',
 });
 
-// Bold condensed display font for section headers ("★ Trending Now ★")
+// Bold condensed display font — the title-card voice
 const anton = Anton({
   subsets: ['latin'],
   weight: '400',
@@ -59,12 +60,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${dancingScript.variable} ${anton.variable} ${inter.variable}`}>
       <body className="bg-paper text-ink font-body antialiased">
-        <CartProvider>
-          <Header />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
-          <CartDrawer />
-        </CartProvider>
+        <SmoothScroll>
+          <CartProvider>
+            <Header />
+            <main className="min-h-screen">{children}</main>
+            <Footer />
+            <CartDrawer />
+          </CartProvider>
+        </SmoothScroll>
       </body>
     </html>
   );

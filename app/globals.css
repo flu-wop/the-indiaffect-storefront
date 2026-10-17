@@ -2,14 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
 @layer base {
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: smooth; /* fallback; Lenis takes over once JS loads */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Lenis smooth-scroll wiring */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
   }
 
   body {
@@ -19,33 +27,117 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
   }
+
+  ::selection {
+    background: #ff4fc3;
+    color: #111111;
+  }
+
+  ::-webkit-scrollbar {
+    width: 9px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #d8d8d8;
+    border-radius: 9px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ff4fc3;
+  }
+
+  :focus-visible {
+    outline: 2px solid #ff4fc3;
+    outline-offset: 3px;
+  }
 }
 
 @layer components {
-  /* Button styles */
+  /* Buttons — pill shaped, tracked small caps */
   .btn-primary {
-    @apply bg-pink text-ink px-8 py-4 font-semibold uppercase tracking-wider text-sm 
-           hover:bg-pink-light hover:scale-102 transition-all duration-300 ease-smooth;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-pink px-8 py-4
+           text-xs font-semibold uppercase tracking-label text-ink
+           transition-all duration-500 ease-cinematic
+           hover:bg-pink-light hover:shadow-pink-glow;
   }
 
   .btn-secondary {
-    @apply border-2 border-pink text-pink px-8 py-4 font-semibold uppercase tracking-wider text-sm
-           hover:bg-pink hover:text-ink hover:scale-102 transition-all duration-300 ease-smooth;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink/25 px-8 py-4
+           text-xs font-semibold uppercase tracking-label text-ink
+           transition-all duration-500 ease-cinematic
+           hover:border-pink hover:bg-pink hover:text-ink;
   }
 
-  /* Card hover effects */
+  /* Outline button for dark sections */
+  .btn-outline-light {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-paper/30 px-8 py-4
+           text-xs font-semibold uppercase tracking-label text-paper
+           transition-all duration-500 ease-cinematic
+           hover:border-pink hover:text-pink;
+  }
+
+  .btn-ink {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-ink px-8 py-4
+           text-xs font-semibold uppercase tracking-label text-paper
+           transition-all duration-500 ease-cinematic
+           hover:bg-pink hover:text-ink;
+  }
+
   .card-hover {
     @apply transition-all duration-400 ease-smooth hover:scale-102 hover:shadow-xl;
   }
 
-  /* Section spacing */
   .section {
     @apply py-16 md:py-24 lg:py-30;
   }
 
-  /* Skeleton loaders */
   .skeleton {
     @apply animate-pulse bg-paper-dim rounded;
+  }
+
+  /* Wide content frame used by the redesigned sections */
+  .frame {
+    @apply mx-auto w-full max-w-frame px-5 sm:px-8 lg:px-14;
+  }
+
+  /* Small tracked label — "eyebrow" above headlines */
+  .eyebrow {
+    @apply flex items-center gap-3 text-[11px] font-semibold uppercase tracking-label text-pink;
+  }
+  .eyebrow::before {
+    content: '';
+    @apply inline-block h-px w-8 bg-pink/70;
+  }
+
+  /* Display type — condensed heavy, all caps, title-card feel */
+  .display-xl {
+    @apply font-display uppercase leading-[0.9] tracking-[-0.005em];
+    font-size: clamp(3rem, 9vw, 8.5rem);
+  }
+  .display-lg {
+    @apply font-display uppercase leading-[0.95];
+    font-size: clamp(2.5rem, 6.5vw, 5.75rem);
+  }
+  .display-md {
+    @apply font-display uppercase leading-[1];
+    font-size: clamp(1.75rem, 3.6vw, 3rem);
+  }
+
+  /* Page title used by the static pages (About, FAQ, policies…) */
+  .page-title {
+    @apply font-display uppercase leading-[0.95] text-ink;
+    font-size: clamp(2.5rem, 7vw, 5rem);
+  }
+  .page-title::after {
+    content: '';
+    @apply mx-auto mt-5 block h-[3px] w-14 rounded-full bg-pink;
+  }
+
+  /* Outlined display text for marquees */
+  .text-outline {
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 1.5px currentColor;
   }
 }
 
@@ -54,13 +146,29 @@
     text-wrap: balance;
   }
 
-  /* Darkens the hero photo evenly so white/pink overlay text stays legible,
-     matching the live site's bold text-over-photo hero treatment */
-  .gradient-overlay {
-    @apply bg-ink/45;
-  }
-
   .text-shadow-hero {
     text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
+  }
+
+  /* Film-grain texture overlay (inline SVG noise) */
+  .grain {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 180px 180px;
+  }
+
+  .pause-on-hover:hover .animate-marquee {
+    animation-play-state: paused;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }

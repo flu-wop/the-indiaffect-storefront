@@ -9,8 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Matches the live store: white base, black text, hot-pink accent
+        // Palette is unchanged from the live store: white base, black text, hot-pink accent
         'ink': '#111111',
+        'ink-deep': '#0a0a0a',
         'paper': '#ffffff',
         'paper-dim': '#f7f7f7',
         'pink': '#ff4fc3',
@@ -21,17 +22,16 @@ const config: Config = {
         'silver-dark': '#555555',
       },
       fontFamily: {
-        // Elegant serif for the "Indi" half of the wordmark / headings
+        // Elegant serif for editorial lines and the "Indi" half of the wordmark
         heading: ['var(--font-playfair)', 'Playfair Display', 'Georgia', 'serif'],
-        // Pink cursive for the "Affect" half of the wordmark
+        // Pink cursive for the "Affect" half of the wordmark and signature moments
         script: ['var(--font-script)', 'Dancing Script', 'cursive'],
-        // Bold condensed display for section headers ("★ Trending Now ★")
+        // Bold condensed display type — the "title card" voice
         display: ['var(--font-display)', 'Anton', 'Impact', 'sans-serif'],
-        // Clean sans for body
+        // Clean sans for body and small labels
         body: ['var(--font-inter)', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
       },
       fontSize: {
-        // Fluid typography
         'hero': ['clamp(2.5rem, 5vw, 4rem)', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
         'display': ['clamp(2rem, 4vw, 3rem)', { lineHeight: '1.2', letterSpacing: '-0.01em' }],
         'heading-1': ['clamp(1.75rem, 3vw, 2.5rem)', { lineHeight: '1.3' }],
@@ -39,7 +39,6 @@ const config: Config = {
         'heading-3': ['clamp(1.25rem, 2vw, 1.5rem)', { lineHeight: '1.4' }],
       },
       spacing: {
-        // Generous spacing scale
         '18': '4.5rem',
         '22': '5.5rem',
         '26': '6.5rem',
@@ -62,11 +61,19 @@ const config: Config = {
           '2xl': '1400px',
         },
       },
+      maxWidth: {
+        frame: '1560px',
+      },
+      letterSpacing: {
+        label: '0.18em',
+      },
       transitionDuration: {
         '400': '400ms',
       },
       transitionTimingFunction: {
         'smooth': 'cubic-bezier(0.4, 0, 0.2, 1)',
+        // Weighted, filmic easing borrowed from Fire on the Bayou
+        'cinematic': 'cubic-bezier(0.22, 1, 0.36, 1)',
       },
       scale: {
         '102': '1.02',
@@ -74,6 +81,23 @@ const config: Config = {
       },
       opacity: {
         '85': '0.85',
+      },
+      boxShadow: {
+        'pink-glow': '0 0 70px -18px rgba(255, 79, 195, 0.55)',
+      },
+      keyframes: {
+        marquee: {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-50%)' },
+        },
+        'soft-pulse': {
+          '0%, 100%': { opacity: '0.55' },
+          '50%': { opacity: '1' },
+        },
+      },
+      animation: {
+        marquee: 'marquee var(--marquee-duration, 40s) linear infinite',
+        'soft-pulse': 'soft-pulse 4s ease-in-out infinite',
       },
       gridTemplateColumns: {
         'auto-fill': 'repeat(auto-fill, minmax(280px, 1fr))',

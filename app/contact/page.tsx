@@ -9,9 +9,7 @@ export default function ContactPage() {
     <div className="section">
       <div className="container max-w-2xl">
         <div className="text-center mb-12">
-          <h1 className="font-display uppercase text-3xl md:text-5xl text-ink tracking-wide">
-            <span className="text-pink mr-3">★</span>Contact<span className="text-pink ml-3">★</span>
-          </h1>
+          <h1 className="page-title">Contact</h1>
           <p className="text-silver mt-4">
             Questions about an order, brand promotions, or a business 1:1? Reach out below.
           </p>

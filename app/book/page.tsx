@@ -26,9 +26,7 @@ export default function BookPage() {
     <div className="section">
       <div className="container max-w-4xl">
         <div className="text-center mb-14">
-          <h1 className="font-display uppercase text-3xl md:text-5xl text-ink tracking-wide">
-            <span className="text-pink mr-3">★</span>Book<span className="text-pink ml-3">★</span>
-          </h1>
+          <h1 className="page-title">Book</h1>
           <p className="text-silver mt-4">Services beyond the storefront — appointments, promotions, and coaching.</p>
         </div>
 

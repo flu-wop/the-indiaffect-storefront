@@ -32,9 +32,7 @@ export default function FAQPage() {
     <div className="section">
       <div className="container max-w-3xl">
         <div className="text-center mb-12">
-          <h1 className="font-display uppercase text-3xl md:text-5xl text-ink tracking-wide">
-            <span className="text-pink mr-3">★</span>FAQ<span className="text-pink ml-3">★</span>
-          </h1>
+          <h1 className="page-title">FAQ</h1>
         </div>
 
         <div className="divide-y divide-silver/10 border-t border-b border-silver/10">

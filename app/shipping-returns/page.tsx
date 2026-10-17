@@ -2,9 +2,7 @@ export default function ShippingReturnsPage() {
   return (
     <div className="section">
       <div className="container max-w-3xl">
-        <h1 className="font-display uppercase text-3xl md:text-5xl text-ink tracking-wide text-center mb-12">
-          <span className="text-pink mr-3">★</span>Shipping & Returns<span className="text-pink ml-3">★</span>
-        </h1>
+        <h1 className="page-title text-center mb-14">Shipping & Returns</h1>
 
         <div className="space-y-8 text-silver-dark leading-relaxed">
           <section>

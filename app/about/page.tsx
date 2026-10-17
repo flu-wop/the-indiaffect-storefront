@@ -6,9 +6,7 @@ export default function AboutPage() {
     <div className="section">
       <div className="container max-w-4xl">
         <div className="text-center mb-14">
-          <h1 className="font-display uppercase text-3xl md:text-5xl text-ink tracking-wide">
-            <span className="text-pink mr-3">★</span>About<span className="text-pink ml-3">★</span>
-          </h1>
+          <h1 className="page-title">About</h1>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">

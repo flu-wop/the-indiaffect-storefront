@@ -29,8 +29,8 @@ export default function AddToCartForm({ product, price }: Props) {
         >
           {notified ? "You're On The List" : 'Notify Me When Back'}
         </button>
-        <p className="text-xs text-silver mt-3">
-          This item is currently sold out. We'll email you the moment it restocks.
+        <p className="mt-3 text-xs text-silver">
+          This item is currently sold out. We&apos;ll email you the moment it restocks.
         </p>
       </div>
     );
@@ -50,25 +50,25 @@ export default function AddToCartForm({ product, price }: Props) {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row gap-4">
-      <div className="flex items-center border border-silver/30 rounded w-fit">
+    <div className="flex flex-col gap-3 sm:flex-row">
+      <div className="flex w-fit items-center rounded-full border border-ink/20">
         <button
           onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-          className="w-10 h-12 flex items-center justify-center hover:text-pink transition-colors"
+          className="flex h-12 w-12 items-center justify-center text-lg transition-colors hover:text-pink"
           aria-label="Decrease quantity"
         >
           −
         </button>
-        <span className="w-10 text-center">{quantity}</span>
+        <span className="w-8 text-center text-sm font-semibold">{quantity}</span>
         <button
           onClick={() => setQuantity((q) => q + 1)}
-          className="w-10 h-12 flex items-center justify-center hover:text-pink transition-colors"
+          className="flex h-12 w-12 items-center justify-center text-lg transition-colors hover:text-pink"
           aria-label="Increase quantity"
         >
           +
         </button>
       </div>
-      <button onClick={handleAdd} className="btn-primary flex-1">
+      <button onClick={handleAdd} className="btn-ink flex-1">
         Add To Cart
       </button>
     </div>

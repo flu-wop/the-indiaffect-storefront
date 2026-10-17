@@ -15,7 +15,7 @@ export default function CartDrawer() {
     <>
       {/* Backdrop */}
       <div
-        className={`fixed inset-0 bg-ink/50 z-[60] transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-ink/60 backdrop-blur-sm z-[60] transition-opacity duration-500 ${
           isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         onClick={closeCart}
@@ -24,15 +24,16 @@ export default function CartDrawer() {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 h-full w-full sm:w-[420px] bg-paper z-[70] shadow-2xl transition-transform duration-300 ease-smooth flex flex-col ${
+        className={`fixed top-0 right-0 h-full w-full sm:w-[440px] bg-paper z-[70] shadow-2xl transition-transform duration-500 ease-cinematic flex flex-col ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         role="dialog"
+        data-lenis-prevent
         aria-label="Shopping cart"
         aria-hidden={!isOpen}
       >
         <div className="flex items-center justify-between px-6 py-5 border-b border-silver/10">
-          <h2 className="font-display uppercase text-xl text-ink tracking-wide">
+          <h2 className="font-display uppercase text-3xl leading-none text-ink">
             Cart {itemCount > 0 && <span className="text-pink">({itemCount})</span>}
           </h2>
           <button onClick={closeCart} aria-label="Close cart" className="p-2 hover:text-pink transition-colors">
@@ -54,14 +55,14 @@ export default function CartDrawer() {
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-5">
               {lines.map((line) => (
                 <div key={line.id} className="flex gap-4">
-                  <div className="relative w-20 h-24 shrink-0 bg-paper-dim rounded overflow-hidden">
+                  <div className="relative w-20 h-24 shrink-0 bg-paper-dim rounded-sm overflow-hidden">
                     <Image src={line.image} alt={line.title} fill className="object-cover" sizes="80px" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-ink line-clamp-2">{line.title}</p>
                     <p className="text-pink text-sm font-semibold mt-1">{formatPrice(line.price)}</p>
                     <div className="flex items-center gap-3 mt-2">
-                      <div className="flex items-center border border-silver/30 rounded">
+                      <div className="flex items-center border border-ink/20 rounded-full">
                         <button
                           onClick={() => updateQuantity(line.id, line.quantity - 1)}
                           className="w-7 h-7 flex items-center justify-center hover:text-pink transition-colors"
@@ -96,7 +97,7 @@ export default function CartDrawer() {
                 <span className="text-ink font-semibold">{formatPrice(subtotal)}</span>
               </div>
               <p className="text-xs text-silver">Shipping and taxes calculated at checkout.</p>
-              <Link href="/checkout" onClick={closeCart} className="btn-primary w-full text-center block">
+              <Link href="/checkout" onClick={closeCart} className="btn-ink w-full">
                 Checkout
               </Link>
             </div>
